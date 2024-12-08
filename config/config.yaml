@@ -1,0 +1,29 @@
+# Параметры тестовой среды
+environment:
+  base_url: "https://arnypraht.com"
+
+# Параметры браузера
+browser:
+  default: "chrome"
+  headless: false
+  window_size:
+    width: 1920
+    height: 1080
+
+# Параметры тестовых данных
+test_data:
+  valid_user:
+    email: "test_user@example.com"
+    password: "StrongPass123!"
+
+  invalid_user:
+    email: "invalid_email"
+    password: "short"
+
+# Настройки ожиданий и таймаутов
+timeouts:
+  page_load: 10
+  element_load: 5
+
+driver_path:
+  executable_path: "driver/chromedriver.exe"
