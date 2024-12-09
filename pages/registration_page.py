@@ -11,14 +11,14 @@ class RegistrationPage(BasePage):
     _REGISTER_PHONE = (By.ID, "office-auth-register-mobilephone")
     _REGISTER_PASSWORD = (By.ID, "office-register-form-password")
 
-    _REGISTER_BIRTH_DAY = (By.XPATH, "//select[@name=\"birth_day\"]")
+    _REGISTER_BIRTH_DAY = (By.XPATH, "//span[contains(@id, \"birth_day\")]")
     _REGISTER_BIRTH_DAY_LI = (By.XPATH, "//li[contains(@id, \"birth_day\") and text()=\"01\"]")
-    _REGISTER_BIRTH_MONTH = (By.XPATH, "//span[contains(@id, \"birth_month\")]") # "//select[@name=\"birth_month\"]")
+    _REGISTER_BIRTH_MONTH = (By.XPATH, "//span[contains(@id, \"birth_month\")]")  # "//select[@name=\"birth_month\"]")
     _REGISTER_BIRTH_MONTH_LI = (By.XPATH, "//li[contains(@id, \"birth_month\") and text()=\"Янв\"]")
     _REGISTER_BIRTH_YEAR = (By.XPATH, "//span[contains(@id, \"birth_year\")]")
     _REGISTER_BIRTH_YEAR_LI = (By.XPATH, "//li[contains(@id, \"birth_year\") and text()=\"1995\"]")
 
-    _AGREE_CHECKBOX = (By.XPATH, "//input[@type='checkbox']")
+    _AGREE_CHECKBOX = (By.XPATH, "//span[@class='checkbox__tick']")
     _AUTH_LINK = (By.LINK_TEXT, "Авторизация")
     _REGISTER_BUTTON = (By.XPATH, "//button[@type='submit' and @data-analytics='register']")
     _EMPTY_FIELD_ERROR_MESSAGE = (By.XPATH, "//div[contains(@class, \"field__message\") and text()=\"Заполните поле\"]")
@@ -36,12 +36,19 @@ class RegistrationPage(BasePage):
 
         self.input_text(self._REGISTER_PASSWORD, password)
 
+        self.move_to_element(self._REGISTER_BIRTH_DAY)
         self.click(self._REGISTER_BIRTH_DAY)
         self.click(self._REGISTER_BIRTH_DAY_LI)
+
+        self.move_to_element(self._REGISTER_BIRTH_MONTH)
         self.click(self._REGISTER_BIRTH_MONTH)
         self.click(self._REGISTER_BIRTH_MONTH_LI)
+
+        self.move_to_element(self._REGISTER_BIRTH_YEAR)
         self.click(self._REGISTER_BIRTH_YEAR)
         self.click(self._REGISTER_BIRTH_YEAR_LI)
+
+        self.move_to_element(self._AGREE_CHECKBOX)
         self.click(self._AGREE_CHECKBOX)
 
         self.click(self._REGISTER_BUTTON)

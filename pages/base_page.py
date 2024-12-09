@@ -24,11 +24,18 @@ class BasePage:
         except TimeoutException:
             raise AssertionError(f"Элемент {locator} не найден за {timeout} секунд")
 
+    def get_action_chain(self):
+        action = ActionChains(driver=self.driver)
+        return action
+
+    def move_to_element(self, locator):
+        element = self.find_element(locator)
+        return self.get_action_chain().move_to_element(element).perform()
+
     def click(self, locator):
         """Клик по элементу"""
         element = self.find_element(locator)
-        action = ActionChains(driver=self.driver)
-        action.move_to_element(element).click().perform()
+        element.click()
         # element.click()
 
     def input_text(self, locator, text):
