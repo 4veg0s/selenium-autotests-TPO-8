@@ -1,4 +1,4 @@
-from selenium.webdriver import ActionChains
+from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
@@ -46,6 +46,11 @@ class BasePage:
         element = self.find_element(locator)
         element.clear()
         element.send_keys(text)
+
+    def press_enter(self, locator):
+        """Нажатие энтера"""
+        element = self.find_element(locator)
+        element.send_keys(Keys.RETURN)
 
     def is_element_present(self, locator):
         """Проверка присутствия элемента"""

@@ -1,7 +1,8 @@
 from pages.navigation_page import NavigationPage
+import time
 
 
-class TestRegistration:
+class TestNavigation:
     def test_navigate_to_bags_success(self, browser):
         navigation_page = NavigationPage(browser)
         navigation_page.open()
@@ -27,5 +28,7 @@ class TestRegistration:
         navigation_page = NavigationPage(browser)
         navigation_page.open()
         navigation_page.navigate_to_clothing()
+
+        time.sleep(3)
 
         assert navigation_page.is_clothing_opened_successfully(), "Раздел одежды не открылся"

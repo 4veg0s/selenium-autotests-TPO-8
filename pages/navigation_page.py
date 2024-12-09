@@ -4,10 +4,10 @@ from pages.base_page import BasePage
 
 class NavigationPage(BasePage):
     # Локаторы элементов страницы регистрации
-    _BAGS_LINK = (By.LINK_TEXT, "Сумки")
-    _BACKPACKS_LINK = (By.LINK_TEXT, "Рюкзаки")
-    _ACCESSORIES_LINK = (By.LINK_TEXT, "Аксессуары")
-    _CLOTHING_LINK = (By.LINK_TEXT, "Одежда")
+    _BAGS_LINK = (By.XPATH, "//ul[@class='header__menu']//a[@href='/category/bags/']")
+    _BACKPACKS_LINK = (By.XPATH, "//ul[@class='header__menu']//a[@href='/category/backpacks/']")
+    _ACCESSORIES_LINK = (By.XPATH, "//ul[@class='header__menu']//a[@href='/category/aksessuary/']")
+    _CLOTHING_LINK = (By.XPATH, "//ul[@class='header__menu']//a[@href='/shop/clothes/']")
 
     _BAGS_SUCCESS_MARKER = (By.XPATH, "//h1[@class='spoiler__title' and text()='Сумки']")
     _BACKPACKS_SUCCESS_MARKER = (By.XPATH, "//h1[@class='spoiler__title' and text()='Рюкзаки']")

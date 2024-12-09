@@ -7,7 +7,7 @@ from utils.data_generator import generate_user_data
 from conftest import config
 
 
-class TestRegistration:
+class TestAuth:
     def test_successful_login(self, browser, config):
         # Подготовка тестовых данных
         user_data = {
