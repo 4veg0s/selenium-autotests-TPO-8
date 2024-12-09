@@ -22,6 +22,15 @@ class BasePage:
         except TimeoutException:
             raise AssertionError(f"Элемент {locator} не найден за {timeout} секунд")
 
+    def find_elements(self, locator, timeout=10):
+        """Найти все элементы с явным ожиданием"""
+        try:
+            self.wait.until(EC.presence_of_all_elements_located(locator))
+            return self.driver.find_elements(*locator)
+
+        except TimeoutException:
+            raise AssertionError(f"Элементы {locator} не найдены за {timeout} секунд")
+
     def find_nested_element(self, parent_locator, child_locator):
         """Найти вложенный элемент внутри родительского элемента"""
         parent_element = self.find_element(parent_locator)
@@ -63,6 +72,10 @@ class BasePage:
     def get_element_text(self, locator):
         """Получить текст элемента"""
         return self.find_element(locator).text
+
+    def get_nested_element_text(self, parent_element, child_locator):
+        """Получить текст дочернего элемента по локатору"""
+        return parent_element.find_element(*child_locator).text
 
     def is_element_visible(self, locator):
         """Проверка, что элемент видим на странице"""
