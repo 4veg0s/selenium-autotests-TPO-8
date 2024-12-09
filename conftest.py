@@ -19,9 +19,6 @@ def config():
 @pytest.fixture(scope='function')
 def browser(config):
     """Фикстура для настройки и запуска браузера"""
-    browser_name = config['browser']['default']
-    headless_mode = config['browser']['headless']
-
     driver = webdriver.Chrome()
 
     # Настройка размера окна
