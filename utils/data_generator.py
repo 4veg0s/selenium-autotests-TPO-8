@@ -20,7 +20,7 @@ def generate_strong_password(length=12):
     uppercase = string.ascii_uppercase
     lowercase = string.ascii_lowercase
     digits = string.digits
-    special_chars = '!@#$%^&*()_+-=[]{}|'
+    special_chars = '!@#$%^&*_+-=[]{}|'
 
     password = (
             random.choice(uppercase) +
