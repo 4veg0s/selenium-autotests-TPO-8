@@ -8,8 +8,9 @@ import conftest
 
 class BasePage:
     def __init__(self, driver, url):
+        self.base_url = "https://arnypraht.com"
         self.driver = driver
-        self.url = "https://arnypraht.com" + url
+        self.url = self.base_url + url
         self.wait = WebDriverWait(driver, 10)
 
     def open(self):
@@ -23,6 +24,11 @@ class BasePage:
 
         except TimeoutException:
             raise AssertionError(f"Элемент {locator} не найден за {timeout} секунд")
+
+    def find_nested_element(self, parent_locator, child_locator):
+        """Найти вложенный элемент внутри родительского элемента"""
+        parent_element = self.find_element(parent_locator)
+        return parent_element.find_element(child_locator)
 
     def get_action_chain(self):
         action = ActionChains(driver=self.driver)
@@ -56,7 +62,7 @@ class BasePage:
         """Получить текст элемента"""
         return self.find_element(locator).text
 
-    def is_border_bottom_red(self, locator):
-        """Нижняя граница поля красная"""
-        color = self.find_element(locator).value_of_css_property("border-bottom-color")
-        return color == "#e62e4d"
+    def is_element_visible(self, locator):
+        """Проверка, что элемент видим на странице"""
+        element = self.find_element(locator)
+        return element.is_displayed()

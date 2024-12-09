@@ -6,7 +6,7 @@ from pages.base_page import BasePage
 
 
 class RegistrationPage(BasePage):
-    # Локаторы элементов страницы авторизации
+    # Локаторы элементов страницы регистрации
     _REGISTER_EMAIL = (By.ID, "office-auth-register-email")
     _REGISTER_PHONE = (By.ID, "office-auth-register-mobilephone")
     _REGISTER_PASSWORD = (By.ID, "office-register-form-password")
@@ -21,6 +21,8 @@ class RegistrationPage(BasePage):
     _AGREE_CHECKBOX = (By.XPATH, "//span[@class='checkbox__tick']")
     _AUTH_LINK = (By.LINK_TEXT, "Авторизация")
     _REGISTER_BUTTON = (By.XPATH, "//button[@type='submit' and @data-analytics='register']")
+
+    _REGISTRATION_SUCCESS_FORM = (By.XPATH, "//form[@id=\"office-auth-register\" and @class=\"form form--success\"]")
     _EMPTY_FIELD_ERROR_MESSAGE = (By.XPATH, "//div[contains(@class, \"field__message\") and text()=\"Заполните поле\"]")
 
     def __init__(self, driver):
@@ -67,8 +69,12 @@ class RegistrationPage(BasePage):
         self.click(self._AUTH_LINK)
 
     def is_border_bottom_color(self, locator):
-        error_color = "#e62e4d"
+        error_color = "rgba(230, 46, 77, 1)"
         try:
             return self.find_element(locator).value_of_css_property("border-bottom-color") == error_color
         except NoSuchElementException:
             return False
+
+    def is_registration_success_visible(self):
+        """Проверка видимости сообщения об успешной регистрации"""
+        return self.is_element_present(self._REGISTRATION_SUCCESS_FORM)

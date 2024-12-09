@@ -2,10 +2,6 @@ import os
 import pytest
 import yaml
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 
 # Загрузка конфигурации из YAML файла

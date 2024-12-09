@@ -1,3 +1,6 @@
+import random
+import string
+
 import pytest
 from utils.data_generator import generate_user_data
 from pages.registration_page import RegistrationPage
@@ -17,22 +20,24 @@ class TestRegistration:
             password=user_data['password']
         )
 
-        assert not registration_page.is_registration_failed(), "Сообщение об ошибке не отображается"
+        assert registration_page.is_registration_success_visible(), "Не отображается благодарность за регистрацию"
 
     @pytest.mark.parametrize("invalid_email", [
-        # "invalid_email",
-        # "email@",
+        "invalid_email",
+        "email@",
         "@domain.com",
-        # "a" * 100 + "@domain.com"
+        str(random.choice(string.ascii_lowercase) * 100) + "@domain.com"   # Превышает 100 символов (регистрация проходит)
     ])
     def test_registration_invalid_email(self, browser, invalid_email):
         registration_page = RegistrationPage(browser)
         registration_page.open()
+        user_data = generate_user_data()
 
         registration_page.register_user(
             email=invalid_email,
-            phone="79898989898",
-            password="StrongPass123!"
+            phone=user_data['phone'],
+            password=user_data['password']
         )
 
-        assert registration_page.is_any_border_bottom_red(), "Сообщение об ошибке отображается"
+        assert not registration_page.is_registration_success_visible(), "Благодарность за регистрацию отображается"
+        assert registration_page.is_any_border_bottom_red(), "Поле не подсвечено красным"
