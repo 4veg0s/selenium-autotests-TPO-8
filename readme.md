@@ -5,11 +5,13 @@
 ### 1. Создание файла конфигурации
 **PowerShell:** 
 ```
+New-Item -Path "config" -ItemType Directory
 New-Item -Path "config\config.yaml" -ItemType File
 ```
 
 **cmd:**
 ```
+mkdir config
 type nul > config\config.yaml
 ```
 
