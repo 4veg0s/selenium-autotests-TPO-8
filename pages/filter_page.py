@@ -15,7 +15,6 @@ class FilterShopPage(BasePage):
         super().__init__(driver, "/shop")
 
     def filter_black_items(self):
-        """Выполнить поиск"""
         self.move_to_element(self._FILTER_BUTTON)
         self.click(self._FILTER_BUTTON)
         self.move_to_element(self._FILTER_COLOR_CHECKBOX_BLACK)

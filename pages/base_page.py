@@ -14,6 +14,10 @@ class BasePage:
         """Открыть страницу"""
         self.driver.get(self.url)
 
+    def open_specified(self, url):
+        """Открыть страницу"""
+        self.driver.get(self.base_url + url)
+
     def find_element(self, locator, timeout=10):
         """Найти элемент с явным ожиданием"""
         try:
@@ -21,6 +25,10 @@ class BasePage:
 
         except TimeoutException:
             raise AssertionError(f"Элемент {locator} не найден за {timeout} секунд")
+
+    def find_nested_element(self, parent_element, child_locator):
+        """Найти вложенный элемент внутри родительского элемента"""
+        return parent_element.find_element(*child_locator)
 
     def find_elements(self, locator, timeout=10):
         """Найти все элементы с явным ожиданием"""
@@ -31,11 +39,6 @@ class BasePage:
         except TimeoutException:
             raise AssertionError(f"Элементы {locator} не найдены за {timeout} секунд")
 
-    def find_nested_element(self, parent_locator, child_locator):
-        """Найти вложенный элемент внутри родительского элемента"""
-        parent_element = self.find_element(parent_locator)
-        return parent_element.find_element(child_locator)
-
     def get_action_chain(self):
         action = ActionChains(driver=self.driver)
         return action
@@ -44,11 +47,19 @@ class BasePage:
         element = self.find_element(locator)
         return self.get_action_chain().move_to_element(element).perform()
 
+    def move_to_explicit_element(self, element):
+        return self.get_action_chain().move_to_element(element).perform()
+
+
     def click(self, locator):
         """Клик по элементу"""
         element = self.find_element(locator)
         element.click()
-        # element.click()
+
+    def click_explicit(self, element):
+        """Клик по элементу"""
+        element.click()
+
 
     def input_text(self, locator, text):
         """Ввод текста в элемент"""
