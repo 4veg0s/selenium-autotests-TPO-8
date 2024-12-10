@@ -13,7 +13,7 @@ class RegistrationPage(BasePage):
 
     _REGISTER_BIRTH_DAY = (By.XPATH, "//span[contains(@id, \"birth_day\")]")
     _REGISTER_BIRTH_DAY_LI = (By.XPATH, "//li[contains(@id, \"birth_day\") and text()=\"01\"]")
-    _REGISTER_BIRTH_MONTH = (By.XPATH, "//span[contains(@id, \"birth_month\")]")  # "//select[@name=\"birth_month\"]")
+    _REGISTER_BIRTH_MONTH = (By.XPATH, "//span[contains(@id, \"birth_month\")]")
     _REGISTER_BIRTH_MONTH_LI = (By.XPATH, "//li[contains(@id, \"birth_month\") and text()=\"Янв\"]")
     _REGISTER_BIRTH_YEAR = (By.XPATH, "//span[contains(@id, \"birth_year\")]")
     _REGISTER_BIRTH_YEAR_LI = (By.XPATH, "//li[contains(@id, \"birth_year\") and text()=\"1995\"]")
