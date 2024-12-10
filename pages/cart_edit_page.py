@@ -20,6 +20,10 @@ class CartEditPage(BasePage):
     _CART_TABLE_PRODUCT_NAME = (By.XPATH, "//div[@class='h6']")
     _CART_TABLE_PRODUCT_COLOR = (By.XPATH, "//div[contains(@class,'color-name')]")
 
+    _QUANTITY_INPUT_COUNTER = (By.XPATH, "//input[@data-quantity-input]")
+    _QUANTITY_ADD_BUTTON = (By.XPATH, "//button[@data-quantity-plus]")
+
+    _DELETE_CART_ELEMENT_BUTTON = (By.XPATH, "//button[@data-cart-remove]")
 
     _CLEAR_CART_BUTTON = (By.XPATH, "//button[@value='cart/clean']")
 
@@ -40,6 +44,8 @@ class CartEditPage(BasePage):
         add_to_cart_buttons = self.find_elements(self._ADD_TO_CART_BUTTON)
         self.catalog_cards_slice = cards[:3]  # срез для 3-х первых товаров из каталога
         self.add_to_cart_buttons_slice = add_to_cart_buttons[:3]  # срез для 3-х первых товаров из каталога
+        # P.S. первый элемент каталога в какой-то момент распродался и там больше нет кнопки добавить в корзину,
+        # поэтому расхождение по срезам
 
     def init_cart_cards(self):
         self.cart_cards = self.find_elements(self._CART_TABLE_ELEMENT)
@@ -59,8 +65,27 @@ class CartEditPage(BasePage):
             self.click(self._CLOSE_NOTE_BUTTON)
             time.sleep(1)
 
-    def edit_cart(self):
-        pass
+    def add_quantity_to_cart_element(self):
+        self.move_to_element(self._QUANTITY_ADD_BUTTON)
+        self.click(self._QUANTITY_ADD_BUTTON)
+        time.sleep(1)
+
+    def has_item_quantity_increased_successfully(self):
+        return self.find_element(self._QUANTITY_INPUT_COUNTER).get_attribute("value") == "2"
+
+    def delete_item_from_cart(self):
+        delete_element_buttons = self.find_elements(self._DELETE_CART_ELEMENT_BUTTON)
+        self.move_to_explicit_element(delete_element_buttons[1])
+        self.click_explicit(delete_element_buttons[1])
+        time.sleep(1)
+
+    def is_element_absent_from_cart(self):
+            try:
+                self.find_element((By.XPATH, f"//div[@class='h6' and text()='{self.cart_card_names[1]}']"))
+                self.find_element((By.XPATH, f"//div[contains(@class,'color-name') and text()='{self.cart_card_colors[1]}']"))
+                return False
+            except AssertionError:
+                return True
 
     def open_shop(self):
         self.driver.get(self.base_url + self._SHOP_URL)
@@ -69,8 +94,10 @@ class CartEditPage(BasePage):
     def open_cart(self):
         self.driver.get(self.base_url + self._CART_URL)
 
-    def is_item_added_successfully(self):   # FIXME: не работает
+    def is_item_added_successfully(self):
         """Проверка, что все элементы были добавлены в корзину"""
+        # P.S. первый элемент каталога в какой-то момент распродался и там больше нет кнопки добавить в корзину,
+        # поэтому расхождение по срезам
         return all(
             [(str.lower(self.card_names[i]) ==
               str.lower(self.cart_card_names[i]))
